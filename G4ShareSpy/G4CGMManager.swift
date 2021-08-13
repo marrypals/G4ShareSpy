@@ -158,7 +158,9 @@ public class G4CGMManager: CGMManager, ReceiverDelegate {
 
 // MARK: - AlertResponder implementation
 extension G4CGMManager {
-    public func acknowledgeAlert(alertIdentifier: Alert.AlertIdentifier) { }
+    public func acknowledgeAlert(alertIdentifier: Alert.AlertIdentifier, completion: @escaping (Error?) -> Void) {
+        completion(nil)
+    }
 }
 
 // MARK: - AlertSoundVendor implementation
