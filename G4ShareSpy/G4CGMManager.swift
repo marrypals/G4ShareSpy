@@ -136,7 +136,7 @@ public class G4CGMManager: CGMManager, ReceiverDelegate {
         let validGlucose = glucoseHistory.filter({
             $0.isStateValid
         }).filterDateRange(includeAfter, nil).map({
-            NewGlucoseSample(date: $0.startDate, quantity: $0.quantity, isDisplayOnly: $0.isDisplayOnly, wasUserEntered: $0.isDisplayOnly, syncIdentifier: String(describing: $0.sequence), device: self.device)
+            NewGlucoseSample(date: $0.startDate, quantity: $0.quantity, trend: $0.trendType, isDisplayOnly: $0.isDisplayOnly, wasUserEntered: $0.isDisplayOnly, syncIdentifier: String(describing: $0.sequence), device: self.device)
         })
 
         shareManager.delegate.notify { (delegate) in
@@ -158,7 +158,9 @@ public class G4CGMManager: CGMManager, ReceiverDelegate {
 
 // MARK: - AlertResponder implementation
 extension G4CGMManager {
-    public func acknowledgeAlert(alertIdentifier: Alert.AlertIdentifier) { }
+    public func acknowledgeAlert(alertIdentifier: Alert.AlertIdentifier, completion: @escaping (Error?) -> Void) {
+        completion(nil)
+    }
 }
 
 // MARK: - AlertSoundVendor implementation
