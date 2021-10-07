@@ -136,7 +136,7 @@ public class G4CGMManager: CGMManager, ReceiverDelegate {
         let validGlucose = glucoseHistory.filter({
             $0.isStateValid
         }).filterDateRange(includeAfter, nil).map({
-            NewGlucoseSample(date: $0.startDate, quantity: $0.quantity, trend: $0.trendType, isDisplayOnly: $0.isDisplayOnly, wasUserEntered: $0.isDisplayOnly, syncIdentifier: String(describing: $0.sequence), device: self.device)
+            NewGlucoseSample(date: $0.startDate, quantity: $0.quantity, condition: $0.condition, trend: $0.trendType, trendRate: $0.trendRate, isDisplayOnly: $0.isDisplayOnly, wasUserEntered: $0.isDisplayOnly, syncIdentifier: String(describing: $0.sequence), device: self.device)
         })
 
         shareManager.delegate.notify { (delegate) in
