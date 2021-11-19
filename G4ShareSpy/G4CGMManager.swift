@@ -73,7 +73,7 @@ public class G4CGMManager: CGMManager, ReceiverDelegate {
     }
     
     public var cgmManagerStatus: CGMManagerStatus {
-        return CGMManagerStatus(hasValidSensorSession: hasValidSensorSession)
+        return CGMManagerStatus(hasValidSensorSession: hasValidSensorSession, device: device)
     }
     
     private var dataIsFresh: Bool {
