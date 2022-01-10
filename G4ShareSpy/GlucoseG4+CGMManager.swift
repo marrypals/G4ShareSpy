@@ -10,10 +10,14 @@ import Foundation
 import HealthKit
 import LoopKit
 
+enum GlucoseLimits {
+    static var minimum: UInt16 = 40
+    static var maximum: UInt16 = 400
+}
 
 extension GlucoseG4: GlucoseValue {
     public var quantity: HKQuantity {
-        return HKQuantity(unit: .milligramsPerDeciliter, doubleValue: Double(glucose))
+        return HKQuantity(unit: .milligramsPerDeciliter, doubleValue: Double(min(max(glucose, GlucoseLimits.minimum), GlucoseLimits.maximum)))
     }
 
     public var startDate: Date {
@@ -39,6 +43,10 @@ extension GlucoseG4: GlucoseDisplayable {
         return GlucoseTrend(rawValue: Int(trend))
     }
 
+    public var trendRate: HKQuantity? {
+        return nil
+    }
+
     public var isLocal: Bool {
         return true
     }
@@ -46,5 +54,17 @@ extension GlucoseG4: GlucoseDisplayable {
     // TODO Placeholder. This functionality will come with LOOP-1311
     public var glucoseRangeCategory: GlucoseRangeCategory? {
         return nil
+    }
+}
+
+extension GlucoseG4 {
+    public var condition: GlucoseCondition? {
+        if glucose < GlucoseLimits.minimum {
+            return .belowRange
+        } else if glucose > GlucoseLimits.maximum {
+            return .aboveRange
+        } else {
+            return nil
+        }
     }
 }
